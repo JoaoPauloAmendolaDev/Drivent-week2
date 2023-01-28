@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { authenticateToken, validateBody } from "@/middlewares";
-import { verifyTicketsFromUser } from "@/controllers/ticket-controller";
+import { postTicket, verifyTicketsFromUser } from "@/controllers/ticket-controller";
 import { ticketTypeSchema } from "@/schemas/ticket-schema";
+import { enrollmentVerify } from "@/middlewares/enrollment-middleware";
 
 
 const ticketsRouter = Router()
@@ -9,7 +10,8 @@ const ticketsRouter = Router()
 
 ticketsRouter
     .all("/*", authenticateToken )
-    .get("/tickets", verifyTicketsFromUser)
-    .post("/tickets", validateBody(ticketTypeSchema))
+    .get("/" ,enrollmentVerify, verifyTicketsFromUser)
+    .post("/", validateBody(ticketTypeSchema) ,enrollmentVerify , postTicket)
+    .get("/types", getTicketTypes)
 
 export {ticketsRouter}
