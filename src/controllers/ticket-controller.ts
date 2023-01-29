@@ -1,8 +1,7 @@
 import httpStatus from "http-status";
 import { Response, Request } from "express"
 import { AuthenticatedRequest } from "@/middlewares";
-import ticketsRepository from "@/repositories/tickets-repository";
-import { Ticket } from "@prisma/client";
+import { Ticket, TicketType } from "@prisma/client";
 import ticketService from "@/services/ticket-service";
 
 
@@ -13,7 +12,6 @@ export async function verifyTicketsFromUser(req: AuthenticatedRequest, res: Resp
         const ticket = await ticketService.verifyTicketFromUser(id)
         return res.status(httpStatus.OK).send(ticket)
     } catch (error) {
-        console.log(error)
         if(error.message === "NOT_FOUND") {
             return res.sendStatus(httpStatus.NOT_FOUND)
         }
@@ -34,5 +32,14 @@ export async function postTicket(req: AuthenticatedRequest, res : Response):Prom
         return res.status(httpStatus.CREATED).send(ticket)
     } catch (error) {
         return res.sendStatus(httpStatus.NOT_FOUND)
+    }
+}
+
+export async function getTicketTypes(req: Request, res: Response):Promise<Response<TicketType[]>>{
+    try {
+        const ticketTypes = await ticketService.getTicketTypes()
+        return res.status(httpStatus.OK).send(ticketTypes)
+    } catch (error) {
+        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
 }

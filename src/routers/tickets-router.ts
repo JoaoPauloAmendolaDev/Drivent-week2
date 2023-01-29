@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { authenticateToken, validateBody } from "@/middlewares";
-import { postTicket, verifyTicketsFromUser } from "@/controllers/ticket-controller";
+import { getTicketTypes, postTicket, verifyTicketsFromUser } from "@/controllers/ticket-controller";
 import { ticketTypeSchema } from "@/schemas/ticket-schema";
 import { enrollmentVerify } from "@/middlewares/enrollment-middleware";
 

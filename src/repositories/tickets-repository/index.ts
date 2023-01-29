@@ -1,5 +1,5 @@
 import {prisma} from "@/config"
-import { Ticket } from "@prisma/client";
+import { Ticket, TicketType } from "@prisma/client";
 
 function findTicketsByUserId(id: number):Promise<Ticket>{
      const data = prisma.ticket.findFirst({
@@ -41,10 +41,19 @@ function postTicket(enrollmentId: number, ticketTypeId: number){
     return data
 }
 
+function getAllTicketTypes():Promise<TicketType[]>{
+    const data = prisma.ticketType.findMany()
+
+    return data
+}
+
 const ticketsRepository = {
     findTicketsByUserId,
     getEnrollmentByUserId,
-    postTicket
+    postTicket,
+    getAllTicketTypes
 };
+
+
 
 export default ticketsRepository;
