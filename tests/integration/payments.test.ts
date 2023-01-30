@@ -223,8 +223,8 @@ describe("POST /payments/process", () => {
       const beforeCount = await prisma.payment.count();
 
       const body = { ticketId: ticket.id, cardData: generateCreditCardData() };
-      await server.post("/payments/process").set("Authorization", `Bearer ${token}`).send(body);
-
+      const result = await server.post("/payments/process").set("Authorization", `Bearer ${token}`).send(body);
+      console.log(result, 'AQUI É O RESULT')
       const afterCount = await prisma.payment.count();
 
       expect(beforeCount).toEqual(0);

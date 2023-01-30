@@ -53,6 +53,7 @@ describe("GET /enrollments", () => {
       const user = await createUser();
       const enrollment = await createEnrollmentWithAddress(user);
       const token = await generateValidToken(user);
+      console.log(enrollment)
 
       const response = await server.get("/enrollments").set("Authorization", `Bearer ${token}`);
 

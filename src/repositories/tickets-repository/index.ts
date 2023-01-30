@@ -1,8 +1,8 @@
 import {prisma} from "@/config"
-import { Ticket } from "@prisma/client";
+import { Ticket, TicketType } from "@prisma/client";
 
-function findTicketsByUserId(id: number):Promise<Ticket>{
-     const data = prisma.ticket.findFirst({
+async function findTicketsByUserId(id: number):Promise<Ticket>{
+     const data = await prisma.ticket.findFirst({
         where : {
             Enrollment :{
                 userId : id
@@ -15,8 +15,8 @@ function findTicketsByUserId(id: number):Promise<Ticket>{
     return data
 }
 
-function getEnrollmentByUserId(id: number): Promise<{id: number}>{
-    const data = prisma.enrollment.findUnique({
+async function getEnrollmentByUserId(id: number): Promise<{id: number}>{
+    const data = await prisma.enrollment.findUnique({
         where : {
             userId: id
         },
@@ -24,11 +24,13 @@ function getEnrollmentByUserId(id: number): Promise<{id: number}>{
             id: true
         }
     })
+    console.log(data, id)
     return data
 }
 
-function postTicket(enrollmentId: number, ticketTypeId: number){
-    const data = prisma.ticket.create({
+async function postTicket(enrollmentId: number, ticketTypeId: number){
+    console.log(enrollmentId, 'AQUI É O POSTTICKED REPOSITORY')
+    const data = await prisma.ticket.create({
         data: {
             ticketTypeId,
             enrollmentId,
@@ -41,10 +43,19 @@ function postTicket(enrollmentId: number, ticketTypeId: number){
     return data
 }
 
+async function getAllTicketTypes():Promise<TicketType[]>{
+    const data = prisma.ticketType.findMany()
+
+    return data
+}
+
 const ticketsRepository = {
     findTicketsByUserId,
     getEnrollmentByUserId,
-    postTicket
+    postTicket,
+    getAllTicketTypes
 };
+
+
 
 export default ticketsRepository;
