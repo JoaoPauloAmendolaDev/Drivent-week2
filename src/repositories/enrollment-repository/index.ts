@@ -15,7 +15,6 @@ async function upsert(
   createdEnrollment: CreateEnrollmentParams,
   updatedEnrollment: UpdateEnrollmentParams,
 ) {
-  console.log(updatedEnrollment, createdEnrollment)
   const data = await prisma.enrollment.upsert({
     where: {
       userId,

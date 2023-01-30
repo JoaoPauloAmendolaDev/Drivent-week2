@@ -21,10 +21,28 @@ async function verifyIfUserHaveTicket(id: number){
     return data
 }
 
-async function getPrice(ticketTypeId : number){
-    const price = await prisma.payment.findFirst({
+async function verifyIfUserTicketIsGivenTicked(id : number, ticketId : number){
+    const data = await prisma.ticket.findFirst({
+        where:{
+            AND: [
+            {id : ticketId}, 
+            {Enrollment:{
+                    userId : id
+            }}
+        ]}
+    })
+    return data
+}
+
+async function getPrice(TicketTypeId : number){
+    const price = await prisma.ticket.findFirst({
         where : {
-            id : ticketTypeId
+            TicketType : {
+                id : TicketTypeId
+            },
+        },
+        select:{
+            TicketType : true
         }
     })
     return price
@@ -36,7 +54,7 @@ async function paymentSucess(id: number, value : number , cardData: cardData){
             ticketId: id,
             value: value,
             cardIssuer : cardData.issuer,
-            cardLastDigits : cardData.number.toString().substring(cardData.number.toString().length - 4),
+            cardLastDigits : cardData.number.slice(-4),
             createdAt : new Date(),
             updatedAt : new Date(),
         }
@@ -44,11 +62,35 @@ async function paymentSucess(id: number, value : number , cardData: cardData){
     return info
 }
 
+async function updateTickedToPaid(ticketId: number){
+    const info = await prisma.ticket.update({
+        where: {
+            id : ticketId
+        },
+        data: {
+            status : 'PAID'
+        }
+    })
+    return info
+}
+
+async function getPaymentData(ticketId: number){
+    const data = await prisma.payment.findFirst({
+        where: {
+            ticketId : ticketId
+        }
+    })
+    return data
+}
+
 const paymentsRepository = {
     verifyTicketId,
     verifyIfUserHaveTicket,
     getPrice,
-    paymentSucess
+    verifyIfUserTicketIsGivenTicked,
+    paymentSucess,
+    updateTickedToPaid,
+    getPaymentData
 }
 
 export default paymentsRepository
