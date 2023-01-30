@@ -15,13 +15,17 @@ async function upsert(
   createdEnrollment: CreateEnrollmentParams,
   updatedEnrollment: UpdateEnrollmentParams,
 ) {
-  return prisma.enrollment.upsert({
+  console.log(updatedEnrollment, createdEnrollment)
+  const data = await prisma.enrollment.upsert({
     where: {
       userId,
     },
     create: createdEnrollment,
     update: updatedEnrollment,
   });
+
+  console.log(data)
+  return data
 }
 
 export type CreateEnrollmentParams = Omit<Enrollment, "id" | "createdAt" | "updatedAt">;

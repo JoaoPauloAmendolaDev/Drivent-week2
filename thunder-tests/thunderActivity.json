@@ -51,17 +51,27 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:4000/users/",
-    "url": "http://localhost:4000/users/",
+    "url": "http://localhost:4000/enrollments/",
     "method": "POST",
     "sortNum": 0,
     "created": "2023-01-28T00:15:06.585Z",
-    "modified": "2023-01-28T00:15:26.948Z",
-    "headers": [],
+    "modified": "2023-01-30T14:52:05.776Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIxMTMsImlhdCI6MTY3NTA4Nzc3M30.DajepabKf_mttA3ZL6litXyReDs_IxaI1aaemwe6sF8",
+        "isDisabled": true
+      }
+    ],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email\" : \"ze@email.com\",\n  \"password\" : \"123456\"\n}",
+      "raw": "{\n  \n  \"name\" : \"joao\",\n  \"cpf\" : \"17949101741\",\n  \"birthday\" : \"1997-01-03\",\n  \"phone\" : \"(32) 97963-8804\",\n  \"address\" : {\n    \"cep\" : \"24210-330\",\n    \"street\" : \"rua prof\",\n    \"city\" : \"nit\",\n    \"number\" : \"3\",\n    \"state\" : \"RJ\",\n    \"neighborhood\" : \"boa viagem\",\n    \"addressDetail\" : \"perto da rua\"\n  \n}\n}",
       "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIxMzAsImlhdCI6MTY3NTA5MDI1MH0.1wFtIY5Ji6iuEagtf04XCr0-3S_yD5QXcutG81a6wSU"
     },
     "tests": []
   },
